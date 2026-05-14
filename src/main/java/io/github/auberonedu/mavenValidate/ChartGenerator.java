@@ -1,8 +1,13 @@
 package io.github.auberonedu.mavenValidate;
 
+import java.io.File;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.time.TimeSeriesCollection;
+import com.orsonpdf.PDFDocument;
+import com.orsonpdf.Page;
+import java.awt.Rectangle;
 
 /**
  * Generates a JFreeChart line chart from a dataset.
@@ -23,5 +28,13 @@ public class ChartGenerator {
             false,                              // tooltips
             false                               // URLs
         );
+    }
+
+public void exportToPDF(JFreeChart chart, String filename, int width, int height) {
+    PDFDocument pdfDoc = new PDFDocument();
+    Rectangle bounds = new Rectangle(width, height);
+    Page page = pdfDoc.createPage(bounds);
+    chart.draw(page.getGraphics2D(), bounds);
+    pdfDoc.writeToFile(new File(filename));
     }
 }
